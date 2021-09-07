@@ -1,0 +1,98 @@
+{_id: ObjectId("5effaa5662679b5af2c58829"),
+ email: “email@example.com”,
+ name: {given: “Jesse”, family: “Xiao”},
+ age: 31,
+ addresses: [{label: “home”,
+              street: “101 Elm Street”,
+              city: “Springfield”,
+              state: “CA”,
+              zip: “90000”,
+              country: “US”},
+             {label: “mom”,
+              street: “555 Main Street”,
+              city: “Jonestown”,
+              province: “Ontario”,
+              country: “CA”}]
+              
+}
+
+Lister les bases de données
+> show dbs;
+admin    0.000GB
+config   0.000GB
+local    0.000GB
+my_database  0.004GB
+>
+
+Liste des collections
+> use my_database;
+> show collections;
+users
+posts
+>
+
+Compter les documents dans une collection
+> use my_database;
+> db.users.count()
+20234
+>
+
+Trouver le premier document d'une collection
+> db.users.findOne()
+{
+    "_id": ObjectId("5ce45d7606444f199acfba1e"),
+    "name": {given: "Alex", family: "Smith"},
+    "email": "email@example.com"
+    "age": 27
+}
+>
+
+Trouver un document par ID
+> db.users.findOne({_id: ObjectId("5ce45d7606444f199acfba1e")})
+{
+    "_id": ObjectId("5ce45d7606444f199acfba1e"),
+    "name": {given: "Alex", family: "Smith"},
+    "email": "email@example.com",
+    "age": 27
+}
+>
+
+Interroger des documents par plages numériques
+// All posts having “likes” field with numeric value greater than one:
+> db.post.find({likes: {$gt: 1}})
+// All posts having 0 likes
+> db.post.find({likes: 0})
+// All posts that do NOT have exactly 1 like
+> db.post.find({likes: {$ne: 1}})
+Trier les résultats par un champ
+// order by age, in ascending order (smallest values first)
+> db.user.find().sort({age: 1})
+{
+    "_id": ObjectId("5ce45d7606444f199acfba1e"),
+    "name": {given: "Alex", family: "Smith"},
+    "email": "email@example.com",
+    "age": 27
+}
+{
+    _id: ObjectId("5effaa5662679b5af2c58829"),
+    email: “email@example.com”,
+    name: {given: “Jesse”, family: “Xiao”},
+    age: 31
+}
+>
+
+// order by age, in descending order (largest values first)
+> db.user.find().sort({age: -1})
+{
+    _id: ObjectId("5effaa5662679b5af2c58829"),
+    email: “email@example.com”,
+    name: {given: “Jesse”, family: “Xiao”},
+    age: 31
+}
+{
+    "_id": ObjectId("5ce45d7606444f199acfba1e"),
+    "name": {given: "Alex", family: "Smith"},
+    "email": "email@example.com",
+    "age": 27
+}
+>
